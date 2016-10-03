@@ -26,7 +26,7 @@
 
 #include <vcg/math/matrix33.h>
 #include <vcg/math/linear.h>
-#include <vcg/math/lin_algebra.h>
+#include <vcg/math/old_lin_algebra.h>
 #include <vcg/math/disjoint_set.h>
 #include <vcg/space/box3.h>
 #include <vcg/space/point3.h>

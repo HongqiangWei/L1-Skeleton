@@ -5,7 +5,7 @@
 #include <QtGui/QWidget>
 #include <iostream>
 
-#include "..//GeneratedFiles/ui_upsampling_para.h"
+#include "ui_upsampling_para.h"
 #include "ParameterMgr.h"
 #include "glarea.h"
 

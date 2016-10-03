@@ -5,7 +5,7 @@
 #include <QtGui/QWidget>
 #include <iostream>
 
-#include "..//GeneratedFiles/ui_para_skeletonization.h"
+#include "ui_para_skeletonization.h"
 
 #include "ParameterMgr.h"
 #include "glarea.h"
