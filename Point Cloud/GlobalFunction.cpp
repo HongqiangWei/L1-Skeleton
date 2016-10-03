@@ -7,6 +7,7 @@
 
 #include "grid.h"
 //#include "LAP_Others/eigen.h"
+#include <vcg/math/old_lin_algebra.h>
 #include "GlobalFunction.h"
 
 using namespace vcg;
