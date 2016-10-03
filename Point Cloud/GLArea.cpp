@@ -188,7 +188,7 @@ void GLArea::paintGL()
 	Point3f c = -gl_box.Center();
 	double radius = 2.0f/gl_box.Diag();
 
-	trackball.Apply(false);
+	trackball.Apply();
 
 	glPushMatrix();
 	glScalef(radius, radius, radius);
@@ -566,7 +566,7 @@ void GLArea::drawLightBall()
 
 	glPushMatrix();
 	trackball_light.GetView();
-	trackball_light.Apply(!(isDefaultTrackBall()));
+	trackball_light.Apply();
 
 	static float lightPosF[]={0.0,0.0,1.0,0.0};
 	glLightfv(GL_LIGHT0,GL_POSITION,lightPosF);
