@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include "Algorithm/normal_extrapolation.h"
-#include "..//GeneratedFiles//ui_normal_para.h"
+#include "ui_normal_para.h"
 #include "ParameterMgr.h"
 #include "glarea.h"
 
