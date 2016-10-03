@@ -1,25 +1,21 @@
 
 #pragma once
-#include <vcg/simplex/vertex/base.h>
-#include <vcg/simplex/vertex/component_ocf.h>
-#include <vcg/simplex/edge/base.h>
-#include <vcg/simplex/face/base.h>
+#include <vcg/complex/complex.h>
 #include <vcg/simplex/face/component_ocf.h>
 
 #include <vcg/complex/used_types.h>
-#include <vcg/complex/trimesh/base.h>
-#include <vcg/complex/trimesh/allocate.h>
+#include <vcg/complex/allocate.h>
 
 #include <vcg/simplex/face/topology.h>
 
-#include <vcg/complex/trimesh/update/bounding.h>
-#include <vcg/complex/trimesh/update/color.h>
-#include <vcg/complex/trimesh/update/flag.h>
-#include <vcg/complex/trimesh/update/normal.h>
-#include <vcg/complex/trimesh/update/position.h>
-#include <vcg/complex/trimesh/update/quality.h>
-#include <vcg/complex/trimesh/update/selection.h>
-#include <vcg/complex/trimesh/update/topology.h>
+#include <vcg/complex/algorithms/update/bounding.h>
+#include <vcg/complex/algorithms/update/color.h>
+#include <vcg/complex/algorithms/update/flag.h>
+#include <vcg/complex/algorithms/update/normal.h>
+#include <vcg/complex/algorithms/update/position.h>
+#include <vcg/complex/algorithms/update/quality.h>
+#include <vcg/complex/algorithms/update/selection.h>
+#include <vcg/complex/algorithms/update/topology.h>
 
 #include <vcg\space\point3.h>
 
