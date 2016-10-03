@@ -1,0 +1,7 @@
+Windows:
+1. se debe colocar una variable de entorno:
+	VCG_ROOT=LugarDondeEstaVCG
+	ej:
+	VCG_ROOT=D:/BIBLIOTECA/Windows/VCG/vcglib-1.0.0
+2. Copiar el archivo FindCVG.cmake en C:\Program Files\CMake\share\cmake-3.6\Modules
+3. En los proyectos es solo colocar FIND_PACKAGE(VCG)
