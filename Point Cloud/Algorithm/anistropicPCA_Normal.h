@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 * VCGLib                                                            o o     *
 * Visual and Computer Graphics Library                            o     o   *
 *                                                                _   O  _   *
@@ -41,21 +41,19 @@
 
 //#include "KnnNeighbor.h"
 #include "CMesh.h"
-
-
+#include <Algorithm/normal_extrapolation.h>
 template < class VERTEX_CONTAINER >
 class AnistropicPca
 {
 public:
-	typedef typename VERTEX_CONTAINER::value_type	 VertexType;
-	typedef 				 VertexType									 * VertexPointer;
-	typedef typename VERTEX_CONTAINER::iterator		 VertexIterator;
-	typedef typename VertexType::CoordType				 CoordType;
-	typedef typename VertexType::NormalType				 NormalType;
-	typedef typename VertexType::ScalarType				 ScalarType;
-	typedef typename vcg::Box3< ScalarType >			 BoundingBoxType;
-	typedef typename vcg::Matrix33<ScalarType>  	 MatrixType;
-
+    typedef typename VERTEX_CONTAINER::value_type	 VertexType;
+    typedef 				 VertexType									 * VertexPointer;
+    typedef typename VERTEX_CONTAINER::iterator		 VertexIterator;
+    typedef typename VertexType::CoordType				 CoordType;
+    typedef typename VertexType::NormalType				 NormalType;
+    typedef typename VertexType::ScalarType				 ScalarType;
+    typedef typename vcg::Box3< ScalarType >			 BoundingBoxType;
+    typedef typename vcg::Matrix33<ScalarType>  	 MatrixType;
 public:
 
 	//static void ConvertCMesh2CMeshO(const CMesh &cmesh, CMeshO &cmeshO)
@@ -167,7 +165,7 @@ public:
 	}
 
 
-	static void SmoothNormalsUsingNeighbors(const VertexIterator &begin, const VertexIterator &end, const unsigned int k, bool usedistance, CallBackPos *callback=NULL)
+    static void SmoothNormalsUsingNeighbors(const VertexIterator &begin, const VertexIterator &end, const unsigned int k, bool usedistance, CallBackPos *callback=NULL)
 	{
 		BoundingBoxType dataset_bb;
 		for (VertexIterator iter=begin; iter!=end; iter++)
@@ -191,11 +189,16 @@ public:
 		std::vector< CoordType	 	 > nearest_points;
 		std::vector< ScalarType		 > distances;
 
-		for (VertexIterator iter=begin; iter!=end; iter++)
+        for (VertexIterator iter=begin; iter!=end; iter++)
 		{
 			if (callback!=NULL && (++progress%step)==0 && (percentage=int((progress*100)/vertex_count))<100) (callback)(percentage, message);
-			VertPointDistanceFunctor vpdf;
-			DummyObjectMarker dom;
+#ifdef __linux__
+            typename vcg::NormalExtrapolation<VertexType>::VertPointDistanceFunctor vpdf;
+            typename vcg::NormalExtrapolation<VertexType>::DummyObjectMarker dom;
+#else
+            VertPointDistanceFunctor vpdf;
+            DummyObjectMarker dom;
+#endif
 			octree_for_neighbors.GetKClosest(vpdf, dom, k, iter->P(), max_distance, nearest_vertices, distances, nearest_points);
 
 			// for each vertex *iter, compute the normal as avarege of the k-nearest vertices of *iter
