@@ -8,7 +8,7 @@
 #include "ui_para_skeletonization.h"
 
 #include "ParameterMgr.h"
-#include "glarea.h"
+#include "GLArea.h"
 #include "calculationthread.h"
 
 using namespace std;

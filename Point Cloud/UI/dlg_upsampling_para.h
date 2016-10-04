@@ -7,7 +7,7 @@
 
 #include "ui_upsampling_para.h"
 #include "ParameterMgr.h"
-#include "glarea.h"
+#include "GLArea.h"
 
 using namespace std;
 

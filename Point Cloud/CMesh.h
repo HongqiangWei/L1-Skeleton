@@ -17,7 +17,7 @@
 #include <vcg/complex/algorithms/update/selection.h>
 #include <vcg/complex/algorithms/update/topology.h>
 
-#include <vcg\space\point3.h>
+#include <vcg/space/point3.h>
 
 #include <cstdlib> //for rand()
 #include <ctime> //for time()

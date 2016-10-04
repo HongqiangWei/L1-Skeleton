@@ -15,7 +15,7 @@
 #include "UI/dlg_skeleton_para.h"
 #include "UI/dlg_upsampling_para.h"
 
-#include "glarea.h"
+#include "GLArea.h"
 
 using namespace std;
 

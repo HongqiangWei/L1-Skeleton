@@ -10,7 +10,7 @@
 #include "ui_para_wlop.h"
 
 #include "ParameterMgr.h"
-#include "glarea.h"
+#include "GLArea.h"
 #include "calculationthread.h"
 
 using namespace std;

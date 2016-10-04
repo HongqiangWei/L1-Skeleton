@@ -1,5 +1,5 @@
 #pragma once
-#include "cmesh.h"
+#include "CMesh.h"
 #include "ParameterMgr.h"
 
 #include <QtOpenGL/QGLWidget>

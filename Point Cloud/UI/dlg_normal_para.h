@@ -8,7 +8,7 @@
 #include "Algorithm/normal_extrapolation.h"
 #include "ui_normal_para.h"
 #include "ParameterMgr.h"
-#include "glarea.h"
+#include "GLArea.h"
 
 using namespace std;
 

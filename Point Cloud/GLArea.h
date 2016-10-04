@@ -1,5 +1,9 @@
 #pragma once
+#ifdef __linux__
+#include "GL/glew.h"
+#else
 #include "gl/glew.h"
+#endif
 
 //切换32-64位，只需要更换dll，以及选择正确的QT版本并重新编译，这两个个步骤
 
@@ -14,7 +18,7 @@
 
 #include <wrap/gl/trimesh.h>
 #include <wrap/gui/trackball.h>
-#include <vcg\space\point3.h>
+#include <vcg/space/point3.h>
 #include <wrap/io_trimesh/import.h>
 #include <wrap/io_trimesh/export.h>
 #include <iostream>

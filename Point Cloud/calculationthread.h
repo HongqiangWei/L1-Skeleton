@@ -2,7 +2,7 @@
 #define CALCULATIONTHREAD_H
 
 #include <QThread>
-#include "glarea.h"
+#include "GLArea.h"
 
 class GLArea;
 

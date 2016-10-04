@@ -2,7 +2,7 @@
 #define FIXED_GRID_H
 
 #include <vector>
-#include "cmesh.h"
+#include "CMesh.h"
 #include <fstream>
 using namespace std;
 

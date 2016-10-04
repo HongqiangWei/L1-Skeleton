@@ -40,7 +40,7 @@
 #include <stdlib.h>
 
 //#include "KnnNeighbor.h"
-#include "cmesh.h"
+#include "CMesh.h"
 
 
 template < class VERTEX_CONTAINER >
