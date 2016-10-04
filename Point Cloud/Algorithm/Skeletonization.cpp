@@ -1,4 +1,4 @@
-#include "Skeletonization.h"
+﻿#include "Skeletonization.h"
 
 void Skeletonization::run()
 {
@@ -1529,7 +1529,12 @@ double Skeletonization::getMaxAngleOfTwoPair(vector<Point3f>& dir0, vector<Point
      {
        branch1.inactiveAndKeepVirtualHead();
      }
+#ifdef __linux__
+     Curve Crv = reverseOneCurve(c0);
+     new_curve = combineTwoCurvesInOrder(Crv, c1);
+#else
      new_curve = combineTwoCurvesInOrder(reverseOneCurve(c0), c1);
+#endif
      new_branch.back_up_head = branch0.back_up_tail;
      new_branch.back_up_tail = branch1.back_up_tail;
      
@@ -1546,8 +1551,13 @@ double Skeletonization::getMaxAngleOfTwoPair(vector<Point3f>& dir0, vector<Point
      {
        branch1.inactiveAndKeepVirtualTail();
      }
-
+#ifdef __linux__
+     Curve Crv2 = reverseOneCurve(c0);
+     Curve Crv3 = reverseOneCurve(c1);
+     new_curve = combineTwoCurvesInOrder(Crv2, Crv3);
+#else
      new_curve = combineTwoCurvesInOrder(reverseOneCurve(c0), reverseOneCurve(c1));
+#endif
      new_branch.back_up_head = branch0.back_up_tail;
      new_branch.back_up_tail = branch1.back_up_head;
 
@@ -1581,7 +1591,12 @@ double Skeletonization::getMaxAngleOfTwoPair(vector<Point3f>& dir0, vector<Point
      {
        branch1.inactiveAndKeepVirtualTail();
      }
+#ifdef __linux__
+     Curve Crv4 = reverseOneCurve(c1);
+     new_curve = combineTwoCurvesInOrder(c0, Crv4);
+#else
      new_curve = combineTwoCurvesInOrder(c0, reverseOneCurve(c1));
+#endif
      new_branch.back_up_head = branch0.back_up_head;
      new_branch.back_up_tail = branch1.back_up_head;
 
