@@ -15,10 +15,14 @@
 #include <QtGui>
 #include <QtOpenGL/QGLWidget>
 #include<QString>
-
+#ifdef __linux__
+#include <vcg/complex/complex.h>
+#include <vcg/complex/allocate.h>
+#endif
 #include <wrap/gl/trimesh.h>
 #include <wrap/gui/trackball.h>
 #include <vcg/space/point3.h>
+
 #include <wrap/io_trimesh/import.h>
 #include <wrap/io_trimesh/export.h>
 #include <iostream>
