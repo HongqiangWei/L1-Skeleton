@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "GlobalFunction.h"
 #include "ParameterMgr.h"
 
@@ -17,8 +17,11 @@ public:
 		back_up_tail = b.back_up_tail;
 		branch_id = b.branch_id;
 	}
-
+#ifdef __linux__
+    Branch& operator = (const Branch& b)
+#else
 	Branch& Branch::operator = (const Branch& b)
+#endif
 	{
 		if (&b != this)
 		{
@@ -106,8 +109,11 @@ public:
 		chosen_branches = s.chosen_branches;
 		branch_num = s.branch_num;
 	}
-
+#ifdef __linux
+    Skeleton & operator = (const Skeleton& s)
+#else
 	Skeleton & Skeleton::operator = (const Skeleton& s)
+#endif
 	{
 		branches = s.branches;
 		size = s.size;
