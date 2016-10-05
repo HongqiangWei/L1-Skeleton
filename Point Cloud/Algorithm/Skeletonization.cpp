@@ -2143,7 +2143,12 @@ void Skeletonization::dealWithVirtualsForTail(Branch& branch)
   // deal with head eat tail problem
   if (branch.isHeadVirtual())
   {
+#ifdef __linux__
+      Point3f p1 = branch.getHead();Point3f p2 = branch.getTail();
+    double head_tail_dist2 = GlobalFun::computeEulerDistSquare(p1, p2);
+#else
     double head_tail_dist2 = GlobalFun::computeEulerDistSquare(branch.getHead(), branch.getTail());
+#endif
     if (head_tail_dist2 < MAX_Merge_Dist)
     {
       double head_angle = branch.getHeadAngle();
@@ -2676,7 +2681,12 @@ void Skeletonization::reconnectSkeleton()
     for (int i = 0; i < branches.size(); i++)
     {
       Branch& branch = branches[i];
-      double head_tail_dist2 = GlobalFun::computeEulerDistSquare(branch.getHead(), branch.getTail());
+#ifdef __linux__
+      Point3f p1 = branch.getHead();Point3f p2 = branch.getTail();
+    double head_tail_dist2 = GlobalFun::computeEulerDistSquare(p1, p2);
+#else
+    double head_tail_dist2 = GlobalFun::computeEulerDistSquare(branch.getHead(), branch.getTail());
+#endif
       if (head_tail_dist2 < nearby_dist2)
       {
         if (branch.getSize() < 8)
