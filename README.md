@@ -52,15 +52,19 @@ http://vcc.siat.ac.cn/console/homepage/info?id=73
 ## Contributors
 +BibTex
 @ARTICLE{Huang2013,
+
   title = {L1-Medial Skeleton of Point Cloud},
+
   author = H. Huang and S. Wu and D. Cohen-Or and M. Gong and H. Zhang and G. Li and B.Chen},
+
   journal = {ACM Transactions on Graphics},
+
   volume = {32},
+
   issue = {4},
+
   pages = {65:1--65:8},
+
   year = {2013}
+
 } 
-+Original code from 
-
-
-A short snippet describing the license (MIT, Apache, etc.)
