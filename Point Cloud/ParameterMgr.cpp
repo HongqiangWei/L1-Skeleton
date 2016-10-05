@@ -1,4 +1,4 @@
-#include "ParameterMgr.h"
+﻿#include "ParameterMgr.h"
 #include <iostream>
 
 int ParameterMgr::init_time = 0;
@@ -33,7 +33,11 @@ ParameterMgr::~ParameterMgr(void)
 
 
 
+#ifdef __linux__
+void ParameterMgr::setGlobalParameter(QString paraName,const Value& val)
+#else
 void ParameterMgr::setGlobalParameter(QString paraName,Value& val)
+#endif
 {
 	if(glarea.hasParameter(paraName))
 		glarea.setValue(paraName, val);

@@ -18,8 +18,8 @@ public:
 		branch_id = b.branch_id;
 	}
 #ifdef __linux__
-    Branch& Branch::operator = (const Branch& b) //Usando -fpermissive
-    //Branch& operator = (const Branch& b) //Ideal solucion???
+    //Branch& Branch::operator = (const Branch& b) //Usando -fpermissive
+    Branch& operator = (const Branch& b) //Ideal solucion???
 #else
 	Branch& Branch::operator = (const Branch& b)
 #endif

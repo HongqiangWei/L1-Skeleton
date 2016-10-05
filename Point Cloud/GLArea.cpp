@@ -1,4 +1,4 @@
-#include "GLArea.h"
+﻿#include "GLArea.h"
 
 GLArea::GLArea(QWidget *parent): QGLWidget(/*QGLFormat(QGL::DoubleBuffer | QGL::DepthBuffer |QGL::SampleBuffers),*/ parent),
 	               para(global_paraMgr.getGlareaParameterSet()),
@@ -1088,7 +1088,11 @@ void GLArea::runNormalSmoothing()
 	emit needUpdateStatus();
 }
 
+#ifdef __linux__
+void GLArea::outputColor(ostream& out, const QColor& color)
+#else
 void GLArea::outputColor(ostream& out, QColor& color)
+#endif
 {
 	out << color.red() << "	" << color.green() << "	" << color.blue() << endl;
 }

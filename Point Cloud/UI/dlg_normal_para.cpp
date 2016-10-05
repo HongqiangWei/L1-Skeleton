@@ -1,4 +1,4 @@
-#include "UI/dlg_normal_para.h"
+﻿#include "UI/dlg_normal_para.h"
 
 NormalParaDlg::NormalParaDlg(QWidget *p, ParameterMgr * _paras, GLArea * _area) : QFrame(p)
 {

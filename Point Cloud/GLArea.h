@@ -76,7 +76,11 @@ public:
 
 	void saveView(QString fileName);
 	void loadView(QString fileName);
+#ifdef __linux__
+    void outputColor(ostream& out, const QColor& color);
+#else
 	void outputColor(ostream& out, QColor& color);
+#endif
 	QColor inputColor(istream& in);
 	void readRGBNormal(QString fileName);
 	

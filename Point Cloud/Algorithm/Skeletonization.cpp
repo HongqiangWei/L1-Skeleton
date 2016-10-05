@@ -1503,6 +1503,10 @@ double Skeletonization::getMaxAngleOfTwoPair(vector<Point3f>& dir0, vector<Point
  {
    Curve& c0 = branch0.curve;
    Curve& c1 = branch1.curve;
+#ifdef __linux__
+   Curve Crv, Crv2,Crv3,Crv4;
+#endif
+
 
    if (C_Type == UNKNOWN)
    {
@@ -1530,7 +1534,7 @@ double Skeletonization::getMaxAngleOfTwoPair(vector<Point3f>& dir0, vector<Point
        branch1.inactiveAndKeepVirtualHead();
      }
 #ifdef __linux__
-     Curve Crv = reverseOneCurve(c0);
+     Crv = reverseOneCurve(c0);
      new_curve = combineTwoCurvesInOrder(Crv, c1);
 #else
      new_curve = combineTwoCurvesInOrder(reverseOneCurve(c0), c1);
@@ -1552,8 +1556,8 @@ double Skeletonization::getMaxAngleOfTwoPair(vector<Point3f>& dir0, vector<Point
        branch1.inactiveAndKeepVirtualTail();
      }
 #ifdef __linux__
-     Curve Crv2 = reverseOneCurve(c0);
-     Curve Crv3 = reverseOneCurve(c1);
+     Crv2 = reverseOneCurve(c0);
+     Crv3 = reverseOneCurve(c1);
      new_curve = combineTwoCurvesInOrder(Crv2, Crv3);
 #else
      new_curve = combineTwoCurvesInOrder(reverseOneCurve(c0), reverseOneCurve(c1));
@@ -1592,7 +1596,7 @@ double Skeletonization::getMaxAngleOfTwoPair(vector<Point3f>& dir0, vector<Point
        branch1.inactiveAndKeepVirtualTail();
      }
 #ifdef __linux__
-     Curve Crv4 = reverseOneCurve(c1);
+     Crv4 = reverseOneCurve(c1);
      new_curve = combineTwoCurvesInOrder(c0, Crv4);
 #else
      new_curve = combineTwoCurvesInOrder(c0, reverseOneCurve(c1));
@@ -2718,9 +2722,13 @@ void Skeletonization::reconnectSkeleton()
     for (int i = 0; i < branches.size(); i++)
     {
       Branch& branch = branches[i];
-
+#ifdef __linux__
+      Point3f head_P = branch.getHead();
+      Point3f tail_P = branch.getTail();
+#else
       Point3f& head_P = branch.getHead();
       Point3f& tail_P = branch.getTail();
+#endif
 
       break_branch_id = -1;
       break_node_id = -1;
@@ -2789,9 +2797,13 @@ void Skeletonization::reconnectSkeleton()
     for (int i = 0; i < branches.size(); i++)
     {
       Branch& branch0 = branches[i];
-
+#ifdef __linux__
+      Point3f head0_P = branch0.getHead();
+      Point3f tail0_P = branch0.getTail();
+#else
       Point3f& head0_P = branch0.getHead();
       Point3f& tail0_P = branch0.getTail();
+#endif
 
       combine_curve_id0 = i;
       combine_curve_id1 = -1;
@@ -2804,8 +2816,13 @@ void Skeletonization::reconnectSkeleton()
           continue;
 
         Branch& branch1 = branches[j];
+#ifdef __linux__
+        Point3f head1_P = branch1.getHead();
+        Point3f tail1_P = branch1.getTail();
+#else
         Point3f& head1_P = branch1.getHead();
         Point3f& tail1_P = branch1.getTail();
+#endif
 
         vector<double> dists_head;
         vector<double> dists_tail;

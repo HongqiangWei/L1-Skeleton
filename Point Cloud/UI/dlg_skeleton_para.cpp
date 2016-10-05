@@ -1,4 +1,4 @@
-#include "UI/dlg_skeleton_para.h"
+﻿#include "UI/dlg_skeleton_para.h"
 
 SkeletonParaDlg::SkeletonParaDlg(QWidget *p, ParameterMgr * _paras, GLArea * _area) : QFrame(p)
 {
@@ -288,7 +288,12 @@ void SkeletonParaDlg::updatePanel()
 
 void SkeletonParaDlg::getLocalDensityRadius(double _val)
 {
-	m_paras->setGlobalParameter("Local Density Radius",DoubleValue(_val));
+#ifdef __linux__
+    DoubleValue C1(_val);
+    m_paras->setGlobalParameter("Local Density Radius",C1);
+#else
+    m_paras->setGlobalParameter("Local Density Radius",DoubleValue(_val));
+#endif
 }
 
 

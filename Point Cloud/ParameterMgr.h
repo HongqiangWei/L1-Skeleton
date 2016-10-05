@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Parameter.h"
 #include "CMesh.h"
 
@@ -15,7 +15,11 @@ public:
 	RichParameterSet* getNormalSmootherParameterSet(){ return &norSmooth; }
 	RichParameterSet* getUpsamplingParameterSet(){ return &upsampling; }
 
-	void setGlobalParameter(QString paraName,Value& val);
+#ifdef __linux__
+    void setGlobalParameter(QString paraName,const Value& val);
+#else
+    void setGlobalParameter(QString paraName,Value& val);
+#endif
 	typedef enum {GLAREA, DATA, DRAWER, WLOP, NOR_SMOOTH, SKELETON, UPSAMPLING}ParaType;
 
 private:
