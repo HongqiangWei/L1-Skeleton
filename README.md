@@ -5,6 +5,7 @@
 +Use CMake
 +
 
+http://vcc.siat.ac.cn/console/homepage/info?id=73
 
 ## CMake
 
