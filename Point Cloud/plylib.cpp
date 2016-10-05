@@ -2,7 +2,7 @@
 * VCGLib                                                            o o     *
 * Visual and Computer Graphics Library                            o     o   *
 *                                                                _   O  _   *
-* Copyright(C) 2004                                                \/)\/    *
+* Copyright(C) 2004-2016                                           \/)\/    *
 * Visual Computing Lab                                            /\/|      *
 * ISTI - Italian National Research Council                           |      *
 *                                                                    \      *
@@ -27,51 +27,6 @@ of Greg Turk and on the work of Claudio Rocchini
 
 ****************************************************************************/
 
-/****************************************************************************
-  History
-
-$Log: not supported by cvs2svn $
-Revision 1.12  2006/01/27 09:09:10  corsini
-Fix signed/unsigned mismatch
-
-Revision 1.11  2005/12/02 00:00:53  cignoni
-Moved and corrected interpret_texture_name from plystuff.h to plylib.cpp
-
-Revision 1.10  2005/11/26 00:22:46  cignoni
-added untested code of interpret_texture
-
-Revision 1.9  2005/11/12 07:07:47  cignoni
-Changed Offset types to remove warnings
-
-Revision 1.8  2005/03/15 11:46:52  cignoni
-Cleaning of the automatic bbox caching support for ply files. First working version.
-
-Revision 1.7  2005/01/03 10:35:59  cignoni
-Improved the compatibility for ply format for faces having the list size (e.g. number of vertexes of a face) as a char instead of a uchar.
-Added a couple of new face descriptors, corrected a bug in error reporting function (and restructured) and translated a few comments.
-Thanks to Patrick Min for the careful bug reporting
-
-Revision 1.6  2004/06/23 15:36:57  cignoni
-Restructured management of error, now the standard open for any mesh type return the error code, the default success value is zero
-Any import class has a method ErrorMsg that give a verbal description of an error code.
-
-Revision 1.5  2004/06/23 00:06:45  ponchio
-Moved #define LITTLE_MACHINE outside of #ifdef WIN32 (linux on PC is little too).
-
-Revision 1.4  2004/05/12 17:21:08  ganovelli
-inclusion of io.h removed (unnecessary)
-
-Revision 1.3  2004/05/12 10:13:29  ganovelli
-direct.h was included also without WIN32 definition
-
-Revision 1.2  2004/04/06 21:48:50  cignoni
-Commented out unused parameter names
-
-Revision 1.1  2004/03/03 15:00:51  cignoni
-Initial commit
-
-****************************************************************************/
-
 
 // Note that on ppc mac (the only bigendian machine around)
 // the preprocessor def __BIG_ENDIAN__ is always defined.
@@ -87,6 +42,7 @@ Initial commit
 #endif
 #ifdef _MSC_VER
 #pragma warning( disable : 4267 )
+#define strtok_r strtok_s
 #endif
 
 #ifdef WIN32
@@ -628,7 +584,7 @@ static inline int SkipScalarA( XFILE * fp, const int tf )
 
 static inline int SkipScalarB( XFILE * fp, const int tf)
 {
-	static char dummy[8];
+  char dummy[8];
 
 	assert(fp);
 	return pb_fread(dummy,1,TypeSize[tf],fp);
@@ -636,14 +592,14 @@ static inline int SkipScalarB( XFILE * fp, const int tf)
 
 static int ReadScalarB( XFILE * fp, void * mem, const int tf, const int tm, int fmt )
 {
-	static char		ch;
-	static short	sh;
-	static int		in;
-	static uchar	uc;
-	static ushort	us;
-	static uint		ui;
-	static float	fl;
-	static double	dd;
+  char		ch;
+  short	sh;
+  int		in;
+  uchar	uc;
+  ushort	us;
+  uint		ui;
+  float	fl;
+  double	dd;
 
 	int r = 0;
 
@@ -768,14 +724,14 @@ static int ReadScalarB( XFILE * fp, void * mem, const int tf, const int tm, int 
 
 static int ReadScalarA( XFILE * fp, void * mem, const int tf, const int tm )
 {
-	static char		ch;
-	static short	sh;
-	static int		in;
-	static uchar	uc;
-	static ushort	us;
-	static uint		ui;
-	static float	fl;
-	static double	dd;
+  char		ch;
+  short	sh;
+  int		in;
+  uchar	uc;
+  ushort	us;
+  uint		ui;
+  float	fl;
+  double	dd;
 
 	int r = 0;
 
@@ -1028,18 +984,18 @@ int PlyFile::OpenRead( const char * filename )
 {
 		// Tokens dell'intestazione
 
-	static const char * SEP			= " \t\n\r";
-	static const char * HEADER		= "ply";
-	static const char * FORMAT		= "format";
-	static const char * TASCII		= "ascii";
-	static const char * TBINBIG		= "binary_big_endian";
-	static const char * TBINLITTLE	= "binary_little_endian";
-	static const char * COMMENT		= "comment";
-	static const char * OBJ_INFO	= "obj_info";
-	static const char * ELEMENT		= "element";
-	static const char * PROPERTY	= "property";
-	static const char * ENDHEADER	= "end_header";
-	static const char * LIST		= "list";
+  const char * SEP			= " \t\n\r";
+  const char * HEADER		= "ply";
+  const char * FORMAT		= "format";
+  const char * TASCII		= "ascii";
+  const char * TBINBIG		= "binary_big_endian";
+  const char * TBINLITTLE	= "binary_little_endian";
+  const char * COMMENT		= "comment";
+  const char * OBJ_INFO	= "obj_info";
+  const char * ELEMENT		= "element";
+  const char * PROPERTY	= "property";
+  const char * ENDHEADER	= "end_header";
+  const char * LIST		= "list";
 
 	const int MAXB = 512;
 	char buf[MAXB];
@@ -1049,7 +1005,6 @@ int PlyFile::OpenRead( const char * filename )
 		// Predistruzione
 
 	Destroy();
-
 		// Apertura file
 
 	gzfp = pb_fopen(filename,"rb");
@@ -1059,8 +1014,8 @@ int PlyFile::OpenRead( const char * filename )
 		goto error;
 	}
 
-	header[0] = 0;
-
+  header.clear();
+  header.reserve(1536);
 		// ********* Parsing header ***********
 
 			// Controllo header
@@ -1069,7 +1024,8 @@ int PlyFile::OpenRead( const char * filename )
 		error = E_UNESPECTEDEOF;
 		goto error;
 	}
-	strcat(header,buf);
+  header.append(buf);
+
 	if( strncmp(buf,HEADER,strlen(HEADER)) )
 	{
 		error = E_NOTHEADER;
@@ -1084,8 +1040,13 @@ int PlyFile::OpenRead( const char * filename )
 		error = E_UNESPECTEDEOF;
 		goto error;
 	}
-	strcat(header,buf);
-	token = strtok(buf,SEP);
+  header.append(buf);
+#ifdef __MINGW32__
+  token = strtok(buf,SEP);
+#else
+  char *tokenPtr;
+  token = strtok_r(buf,SEP,&tokenPtr);
+#endif
 	if(token==0)
 	{
 		error = E_UNESPECTEDEOF;
@@ -1096,7 +1057,11 @@ int PlyFile::OpenRead( const char * filename )
 		error = E_NOFORMAT;
 		goto error;
 	}
-	token = strtok(0,SEP);
+#ifdef __MINGW32__
+  token = strtok(0,SEP);
+#else
+  token = strtok_r(0,SEP,&tokenPtr);
+#endif
 	if(token==0)
 	{
 		error = E_UNESPECTEDEOF;
@@ -1113,14 +1078,17 @@ int PlyFile::OpenRead( const char * filename )
 		error = E_NOFORMAT;
 		goto error;
 	}
-	token = strtok(0,SEP);
+#ifdef __MINGW32__
+  token = strtok(0,SEP);
+#else
+  token = strtok_r(0,SEP,&tokenPtr);
+#endif
 	if(token==0)
 	{
 		error = E_UNESPECTEDEOF;
 		goto error;
 	}
 	version = float(atof(token));
-
 		//************* Ciclo lettura elementi ****************
 
 	curelement = 0;
@@ -1131,9 +1099,13 @@ int PlyFile::OpenRead( const char * filename )
 			error = E_UNESPECTEDEOF;
 			goto error;
 		}
-		strcat(header,buf);
+    header.append(buf);
 
-		token = strtok(buf,SEP);
+#ifdef __MINGW32__
+    token = strtok(buf,SEP);
+#else
+    token = strtok_r(buf,SEP,&tokenPtr);
+#endif
 		if(token==0)
 		{
 			error = E_UNESPECTEDEOF;
@@ -1157,14 +1129,22 @@ int PlyFile::OpenRead( const char * filename )
 		else if( !strcmp(token,ELEMENT) )
 		{
 				// Lettura nome elemento
-			char * name = strtok(0,SEP);
+#ifdef __MINGW32__
+      char * name = strtok(0,SEP);
+#else
+      char * name = strtok_r(0,SEP,&tokenPtr);
+#endif
 			if(name==0)
 			{
 				error = E_SYNTAX;
 				goto error;
 			}
 				// Lettura numero di elementi
-			token = strtok(0,SEP);
+#ifdef __MINGW32__
+      token = strtok(0,SEP);
+#else
+      token = strtok_r(0,SEP,&tokenPtr);
+#endif
 			if(name==0)
 			{
 				error = E_SYNTAX;
@@ -1183,7 +1163,11 @@ int PlyFile::OpenRead( const char * filename )
 				error = E_PROPOUTOFELEMENT;
 				goto error;
 			}
-			token = strtok(0,SEP);
+#ifdef __MINGW32__
+      token = strtok(0,SEP);
+#else
+      token = strtok_r(0,SEP,&tokenPtr);
+#endif
 			if(token==0)
 			{
 				error = E_SYNTAX;
@@ -1191,7 +1175,11 @@ int PlyFile::OpenRead( const char * filename )
 			}
 			if( !strcmp(token,LIST) )
 			{
-				token = strtok(0,SEP);
+#ifdef __MINGW32__
+        token = strtok(0,SEP);
+#else
+        token = strtok_r(0,SEP,&tokenPtr);
+#endif
 				if(token==0)
 				{
 					error = E_SYNTAX;
@@ -1203,7 +1191,11 @@ int PlyFile::OpenRead( const char * filename )
 					error = E_BADTYPENAME;
 					goto error;
 				}
-				token = strtok(0,SEP);
+#ifdef __MINGW32__
+        token = strtok(0,SEP);
+#else
+        token = strtok_r(0,SEP,&tokenPtr);
+#endif
 				if(token==0)
 				{
 					error = E_SYNTAX;
@@ -1215,7 +1207,11 @@ int PlyFile::OpenRead( const char * filename )
 					error = E_BADTYPENAME;
 					goto error;
 				}
-				token = strtok(0,SEP);
+#ifdef __MINGW32__
+        token = strtok(0,SEP);
+#else
+        token = strtok_r(0,SEP,&tokenPtr);
+#endif
 				if(token==0)
 				{
 					error = E_SYNTAX;
@@ -1232,7 +1228,11 @@ int PlyFile::OpenRead( const char * filename )
 					error = E_BADTYPENAME;
 					goto error;
 				}
-				token = strtok(0,SEP);
+#ifdef __MINGW32__
+        token = strtok(0,SEP);
+#else
+        token = strtok_r(0,SEP,&tokenPtr);
+#endif
 				if(token==0)
 				{
 					error = E_SYNTAX;
@@ -1347,7 +1347,7 @@ int PlyFile::ElemNumber( int i ) const
 
 static bool cb_skip_bin1( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/ )
 {
-	static char dummy[1];
+  char dummy[1];
 
 	assert(fp);
 	return pb_fread(dummy,1,1,fp)!=0;
@@ -1355,7 +1355,7 @@ static bool cb_skip_bin1( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/ )
 
 static bool cb_skip_bin2( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/ )
 {
-	static char dummy[2];
+  char dummy[2];
 
 	assert(fp);
 	return pb_fread(dummy,1,2,fp)!=0;
@@ -1363,7 +1363,7 @@ static bool cb_skip_bin2( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/ )
 
 static bool cb_skip_bin4( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/ )
 {
-	static char dummy[4];
+  char dummy[4];
 
 	assert(fp);
 	return pb_fread(dummy,1,4,fp)!=0;
@@ -1371,7 +1371,7 @@ static bool cb_skip_bin4( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/ )
 
 static bool cb_skip_bin8( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/ )
 {
-	static char dummy[8];
+  char dummy[8];
 
 	assert(fp);
 	return pb_fread(dummy,1,8,fp)!=0;
@@ -1379,7 +1379,7 @@ static bool cb_skip_bin8( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/ )
 
 static bool cb_skip_float_ascii( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/ )
 {
-	static float dummy;
+  float dummy;
 
 	assert(fp);
 	return fscanf(fp,"%f",&dummy)!=EOF;
@@ -1387,7 +1387,7 @@ static bool cb_skip_float_ascii( GZFILE fp, void * /*mem*/, PropDescriptor * /*d
 
 static bool cb_skip_int_ascii( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/ )
 {
-	static int dummy;
+  int dummy;
 
 	assert(fp);
 	return fscanf(fp,"%d",&dummy)!=EOF;
@@ -1845,11 +1845,11 @@ static bool cb_read_ascii( GZFILE fp, void * mem, PropDescriptor * d )
 
 
 const int SKIP_MAX_BUF = 512;
-static char skip_buf[SKIP_MAX_BUF];
 
 static bool cb_skip_list_bin1( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/ )
 {
-	uchar n;
+  char skip_buf[SKIP_MAX_BUF];
+  uchar n;
 		// Solo indici uchar
 	if( pb_fread(&n,1,1,fp)==0 ) return false;
 
@@ -1859,7 +1859,8 @@ static bool cb_skip_list_bin1( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/
 
 static bool cb_skip_list_bin2( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/ )
 {
-	uchar n;
+  char skip_buf[SKIP_MAX_BUF];
+  uchar n;
 		// Solo indici uchar
 	if( pb_fread(&n,1,1,fp)==0 ) return false;
 
@@ -1869,7 +1870,8 @@ static bool cb_skip_list_bin2( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/
 
 static bool cb_skip_list_bin4( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/ )
 {
-	uchar n;
+  char skip_buf[SKIP_MAX_BUF];
+  uchar n;
 		// Solo indici uchar
 	if( pb_fread(&n,1,1,fp)==0 ) return false;
 
@@ -1879,7 +1881,8 @@ static bool cb_skip_list_bin4( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/
 
 static bool cb_skip_list_bin8( GZFILE fp, void * /*mem*/, PropDescriptor * /*d*/ )
 {
-	uchar n;
+  char skip_buf[SKIP_MAX_BUF];
+  uchar n;
 		// Solo indici uchar
 	if( pb_fread(&n,1,1,fp)==0 ) return false;
 

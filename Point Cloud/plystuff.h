@@ -2,7 +2,7 @@
 * VCGLib                                                            o o     *
 * Visual and Computer Graphics Library                            o     o   *
 *                                                                _   O  _   *
-* Copyright(C) 2004                                                \/)\/    *
+* Copyright(C) 2004-2016                                           \/)\/    *
 * Visual Computing Lab                                            /\/|      *
 * ISTI - Italian National Research Council                           |      *
 *                                                                    \      *
@@ -56,6 +56,7 @@ Cleaning of the automatic bbox caching support for ply files. First working vers
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h> 
 #include <fcntl.h> 
 #ifdef WIN32
 #include <io.h>
