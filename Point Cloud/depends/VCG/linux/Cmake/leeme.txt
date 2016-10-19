@@ -1,0 +1,5 @@
+Linux:
+1. Descomprimir el source de VCG1.0 en /usr/local/
+2. Si la carpeta queda con el nombre vcglib-1.0.0 renombrar a vcg
+3. Copiar el archivo FindCVG.cmake en /usr/share/cmake-3.x/Modules (Aqui depende de que version tenga instalado en el sistema)
+4. En los proyectos es solo colocar FIND_PACKAGE(VCG)
